@@ -19,9 +19,5 @@
   "bugs": {
     "url": "https://github.com/devongovett/unicode-trie/issues"
   },
-  "homepage": "https://github.com/devongovett/unicode-trie",
-  "dependencies": {
-    "pako": "^0.2.5",
-    "tiny-inflate": "^1.0.0"
-  }
+  "homepage": "https://github.com/devongovett/unicode-trie"
 }
