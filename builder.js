@@ -1,5 +1,5 @@
 const UnicodeTrie = require('./');
-const pako = require('pako');
+const zlib = require('zlib');
 const { swap32LE } = require('./swap');
 
 // Shift size for getting the index-1 table offset.
@@ -933,7 +933,7 @@ class UnicodeTrieBuilder {
   }
 
   // Generates a Buffer containing the serialized and compressed trie.
-  // Trie data is compressed twice using the deflate algorithm to minimize file size.
+  // Trie data is compressed using the deflate algorithm to minimize file size.
   // Format:
   //   uint32_t highStart;
   //   uint32_t errorValue;
@@ -947,8 +947,7 @@ class UnicodeTrieBuilder {
     // swap bytes to little-endian
     swap32LE(data);
 
-    let compressed = pako.deflateRaw(data);
-    compressed = pako.deflateRaw(compressed);
+    const compressed = zlib.deflateRawSync(data);
 
     const buf = Buffer.alloc(compressed.length + 12);
     buf.writeUInt32LE(trie.highStart, 0);

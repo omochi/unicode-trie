@@ -1,4 +1,4 @@
-const inflate = require('tiny-inflate');
+const zlib = require('zlib');
 const { swap32LE } = require('./swap');
 
 // Shift size for getting the index-1 table offset.
@@ -83,9 +83,8 @@ class UnicodeTrie {
         data = data.subarray(12);
       }
 
-      // double inflate the actual trie data
-      data = inflate(data, new Uint8Array(uncompressedLength));
-      data = inflate(data, new Uint8Array(uncompressedLength));
+      // inflate the actual trie data
+      data = zlib.inflateRawSync(data);
 
       // swap bytes from little-endian
       swap32LE(data);
