@@ -83,8 +83,7 @@ class UnicodeTrie {
         data = data.subarray(12);
       }
 
-      // double inflate the actual trie data
-      data = zlib.inflateRawSync(data);
+      // inflate the actual trie data
       data = zlib.inflateRawSync(data);
 
       // swap bytes from little-endian
